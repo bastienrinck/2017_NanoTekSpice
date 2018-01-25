@@ -1,0 +1,19 @@
+/*
+** EPITECH PROJECT, 2018
+** TekSpice
+** File description:
+** oui
+*/
+
+#include "TekSpice.hpp"
+
+TekSpice::TekSpice()
+{}
+
+TekSpice::~TekSpice()
+{}
+
+std::unique_ptr <nts::IComponent> TekSpice::createComponent(const std::string &type, const std::string &value)
+{
+	return _fcts[type](value);
+}
