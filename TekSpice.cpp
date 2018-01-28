@@ -15,5 +15,8 @@ TekSpice::~TekSpice()
 
 std::unique_ptr <nts::IComponent> TekSpice::createComponent(const std::string &type, const std::string &value)
 {
-	return _fcts[type](value);
+	if (_fcts[type])
+		return _fcts[type](value);
+	else
+		throw std::exception();
 }

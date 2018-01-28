@@ -12,10 +12,10 @@
 #include "../IComponent.hpp"
 #include "../Logic.hpp"
 
-class Component_4001 : public nts::IComponent {
+class Component_Input : public nts::IComponent {
 	public:
-		Component_4001();
-		~Component_4001() = default;
+		Component_Input();
+		~Component_Input() = default;
 
 		nts::Tristate compute(std::size_t = 1) final;
 		void setLink(std::size_t, nts::IComponent &, std::size_t) final;
@@ -25,6 +25,4 @@ class Component_4001 : public nts::IComponent {
 	private:
 		std::vector<nts::Tristate *> _inPins;
 		std::vector<nts::Tristate> _outPins;
-		std::map<int, std::vector<int>> _pair;
-		
 };

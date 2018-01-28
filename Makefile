@@ -6,12 +6,14 @@ RM	= rm -f
 
 SRCS	= ./TekSpice.cpp \
 	  ./components/4001.cpp \
+	  ./components/Input.cpp \
+	  ./components/Output.cpp \
 	  ./main.cpp 
 
 OBJS	= $(SRCS:.cpp=.o)
 
 CPPFLAGS = -I./pp
-CPPFLAGS += -W -Wall -Wextra
+CPPFLAGS += -W -Wall -Wextra -g
 
 all: $(NAME)
 
