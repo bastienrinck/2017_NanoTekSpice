@@ -13,10 +13,10 @@
 #include "../IComponent.hpp"
 #include "../Logic.hpp"
 
-class Component_4001 : public nts::IComponent {
+class Component_4011 : public nts::IComponent {
 	public:
-		Component_4001();
-		~Component_4001() = default;
+		Component_4011();
+		~Component_4011() = default;
 
 		nts::Tristate compute(std::size_t = 1) final;
 		void setLink(std::size_t, nts::IComponent &, std::size_t) final;

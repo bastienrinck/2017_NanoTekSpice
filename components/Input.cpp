@@ -19,19 +19,19 @@ Component_Input::Component_Input()
 nts::Tristate Component_Input::compute(std::size_t pin)
 {
 	if (pin != 1)
-		throw std::out_of_range::exception();
+		throw std::out_of_range("pin out of authorized range");
 	return *_inPins[pin];
 }
 
 nts::Tristate &Component_Input::getPin(std::size_t pin)
 {
 	if (pin != 1)
-		throw std::out_of_range::exception();
+		throw std::out_of_range("pin out of authorized range");
 	return *(_inPins[pin - 1]);
 }
 
 void Component_Input::setLink(std::size_t, nts::IComponent &,
 				std::size_t)
 {
-	throw std::exception();
+	throw std::out_of_range("pin out of authorized range");
 }

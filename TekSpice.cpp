@@ -18,5 +18,5 @@ std::unique_ptr <nts::IComponent> TekSpice::createComponent(const std::string &t
 	if (_fcts[type])
 		return _fcts[type](value);
 	else
-		throw std::exception();
+		throw std::out_of_range("type not implemented");
 }

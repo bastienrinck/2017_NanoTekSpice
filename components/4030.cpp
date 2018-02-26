@@ -6,9 +6,9 @@
 */
 
 #include <algorithm>
-#include "4001.hpp"
+#include "4030.hpp"
 
-Component_4001::Component_4001()
+Component_4030::Component_4030()
 	: _inPins(14)
 	, _outPins(4)
 {
@@ -26,21 +26,21 @@ Component_4001::Component_4001()
 	_pair[10] = {12, 13};
 }
 
-nts::Tristate Component_4001::compute(std::size_t pin)
+nts::Tristate Component_4030::compute(std::size_t pin)
 {
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) ==
 		_computablePins.end())
 		throw std::out_of_range("pin not computable");
 	if (!&getPin(_pair[pin-1][0]) || !&getPin(_pair[pin-1][1]))
 		return nts::UNDEFINED;
-	return Logic::nor_(
+	return Logic::xor_(
 		getPin(_pair[pin-1][0]),
 		getPin(_pair[pin-1][1]),
 		*(std::get<0>(_inPins[pin-1]))
 	);
 }
 
-nts::Tristate &Component_4001::getPin(std::size_t pin)
+nts::Tristate &Component_4030::getPin(std::size_t pin)
 {
 	if (std::find(_prohibedPins.begin(), _prohibedPins.end(), pin) !=
 		_prohibedPins.end())
@@ -48,7 +48,7 @@ nts::Tristate &Component_4001::getPin(std::size_t pin)
 	return *(std::get<0>(_inPins[pin - 1]));
 }
 
-void Component_4001::setLink(std::size_t pin, nts::IComponent &other,
+void Component_4030::setLink(std::size_t pin, nts::IComponent &other,
 				std::size_t otherPin)
 {
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) !=

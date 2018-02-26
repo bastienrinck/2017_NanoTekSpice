@@ -6,6 +6,12 @@ RM	= rm -f
 
 SRCS	= ./TekSpice.cpp \
 	  ./components/4001.cpp \
+	  ./components/4008.cpp \
+	  ./components/4011.cpp \
+	  ./components/4030.cpp \
+	  ./components/4069.cpp \
+	  ./components/4071.cpp \
+	  ./components/4081.cpp \
 	  ./components/Input.cpp \
 	  ./components/Output.cpp \
 	  ./main.cpp 
