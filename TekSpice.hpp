@@ -35,12 +35,12 @@ class TekSpice {
 			{"output", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_Output);}},
 			{"4001", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4001);}},
 			{"4008", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4008);}},
-			{"4011", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4011);}},
+			{"4081", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4011);}},
 			{"4011", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4030);}},
 			{"4011", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4069);}},
 			{"4011", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4071);}},
 			{"4011", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4081);}}
-		};
+	};
 };
 
 #endif
