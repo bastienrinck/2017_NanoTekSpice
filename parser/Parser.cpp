@@ -44,7 +44,6 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_l
 	i += 1;
 	pin2 = static_cast<size_t>(std::stoi(
 		line.substr(i, line.find_first_of(" \t\n", i) - i)));
-	std::cout << "pin1 : " << pin1 << " : " << pin2 << std::endl;
 	components[component1]->setLink(pin1, *components[component2], pin2);
 	if (file.eof())
 		return components;
@@ -92,6 +91,5 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> Parser::parse_
 		throw std::runtime_error("Can't open '" + filename + "'\n");
 	for (; getline(file, line) && line != ".chipsets:";);
 	components = get_chipset(components, file);
-	std::cout << components.size() << std::endl;
 	return components;
 }
