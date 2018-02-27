@@ -36,10 +36,10 @@ class TekSpice {
 			{"4001", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4001);}},
 			{"4008", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4008);}},
 			{"4011", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4011);}},
-			{"4011", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4030);}},
-			{"4011", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4069);}},
-			{"4011", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4071);}},
-			{"4011", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4081);}}
+			{"4030", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4030);}},
+			{"4069", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4069);}},
+			{"4071", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4071);}},
+			{"4081", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4081);}}
 		};
 };
 
