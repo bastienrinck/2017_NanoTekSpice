@@ -44,7 +44,7 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_l
 	i += 1;
 	pin2 = static_cast<size_t>(std::stoi(
 		line.substr(i, line.find_first_of(" \t\n", i) - i)));
-	components[component1]->setLink(pin1, *components[component2], pin2);
+	components[component2]->setLink(pin2, *components[component1], pin1);
 	if (file.eof())
 		return components;
 	return get_links(components, file);
@@ -63,7 +63,6 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_c
 
 	getline(file, line);
 
-	std::cout << line << std::endl;
 	if (line == ".links:")
 		return get_links(components, file);
 	else if (line[0] == '#' || line.empty())
