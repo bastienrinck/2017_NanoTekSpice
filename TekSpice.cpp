@@ -13,7 +13,7 @@ TekSpice::TekSpice()
 TekSpice::~TekSpice()
 {}
 
-std::unique_ptr <nts::IComponent> TekSpice::createComponent(const std::string &type, const std::string &value)
+std::shared_ptr <nts::IComponent> TekSpice::createComponent(const std::string &type, const std::string &value)
 {
 	if (_fcts[type])
 		return _fcts[type](value);
