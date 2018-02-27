@@ -14,6 +14,7 @@ int main(int ac, char **av)
 	TekSpice t;
 	Parser p;
 
+	(void)ac;
 	p.parse_file(av[1]);
 	/*std::shared_ptr<nts::IComponent> i1 = t.createComponent("input", "");
 	std::shared_ptr<nts::IComponent> i2 = t.createComponent("input", "");
