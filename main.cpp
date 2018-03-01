@@ -6,16 +6,16 @@
 */
 
 #include <iostream>
-#include "parser/Parser.hpp"
-#include "TekSpice.hpp"
+#include "compute/Simulator.hpp"
 
 int main(int ac, char **av)
 {
-	TekSpice t;
-	Parser p;
+	Simulator s;
 
 	(void)ac;
-	p.parse_file(av[1]);
+
+	s.parseFile(*new std::string(av[1]));
+	s.getCommand();
 	/*std::shared_ptr<nts::IComponent> i1 = t.createComponent("input", "");
 	std::shared_ptr<nts::IComponent> i2 = t.createComponent("input", "");
 	std::shared_ptr<nts::IComponent> c4001 = t.createComponent("4001", "");
