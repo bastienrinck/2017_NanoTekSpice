@@ -15,6 +15,7 @@ SRCS	= ./TekSpice.cpp \
 	  ./components/Input.cpp \
 	  ./components/Output.cpp \
 	  ./parser/Parser.cpp \
+	  ./compute/Simulator.cpp \
 	  ./main.cpp 
 
 OBJS	= $(SRCS:.cpp=.o)
