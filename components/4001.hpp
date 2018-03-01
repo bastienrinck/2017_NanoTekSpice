@@ -22,6 +22,8 @@ class Component_4001 : public nts::IComponent {
 		void setLink(std::size_t, nts::IComponent &, std::size_t) final;
 		nts::Tristate &getPin(std::size_t) final;
 		void dump() const final {};
+
+		nts::C_TYPE getType() {return nts ::C_4001;}
 	protected:
 	private:
 		std::vector<std::tuple<nts::Tristate *, IComponent *, size_t>> _inPins;
