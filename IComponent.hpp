@@ -8,7 +8,6 @@
 #pragma once
 
 #include <string>
-#include "TekSpice.hpp"
 
 namespace nts
 {
@@ -18,7 +17,14 @@ namespace nts
 		FALSE = false
 	};
 
-	enum C_TYPE;
+	enum C_TYPE {
+		C_INPUT,
+		C_OUTPUT,
+		C_4001,
+		C_4008,
+		C_4081,
+		C_4011
+	};
 
 	class IComponent
 	{
