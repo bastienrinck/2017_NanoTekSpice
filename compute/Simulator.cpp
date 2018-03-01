@@ -37,8 +37,8 @@ void Simulator::exit()
 void Simulator::display()
 {
 	for (auto i : components)
-		std::cout << i.first << " : " << typeid(*i.second).name()
-			<< std::endl;
+		if (i.second->getType() == nts::C_OUTPUT)
+			std::cout << i.first + "=" <<i.second->getPin(1) << std::endl;
 }
 
 void Simulator::inputValue()
@@ -54,6 +54,7 @@ void Simulator::simulate()
 }
 
 void Simulator::my_handler(int s) {
+	(void)s;
 	simLoop = false;
 }
 
