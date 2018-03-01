@@ -84,4 +84,5 @@ void Component_4008::setLink(std::size_t pin, nts::IComponent &other,
 		_prohibedPins.end())
 		throw std::out_of_range("pin out of authorized range");
 	_inPins[pin - 1] = std::make_tuple(&(other.getPin(otherPin)), &other);
+	dependencies.push_back(&other);
 }

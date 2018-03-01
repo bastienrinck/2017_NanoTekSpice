@@ -28,5 +28,5 @@ class Component_4008 : public nts::IComponent {
 		std::vector<int> _prohibedPins;
 		std::vector<int> _computablePins;
 		std::map<int, std::vector<int>> _pair;
-		
+		std::vector<nts::IComponent *> dependencies;
 };

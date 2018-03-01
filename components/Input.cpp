@@ -34,4 +34,5 @@ void Component_Input::setLink(std::size_t, nts::IComponent &,
 				std::size_t)
 {
 	throw std::out_of_range("pin out of authorized range");
+	//dependencies.push_back(&other);
 }

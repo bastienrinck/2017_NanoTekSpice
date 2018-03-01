@@ -52,4 +52,5 @@ void Component_4081::setLink(std::size_t pin, nts::IComponent &other,
 		_computablePins.end())
 		throw std::out_of_range("computable pins are read-only");
 	_inPins[pin - 1] = std::make_tuple(&(other.getPin(otherPin)), &other);
+	dependencies.push_back(&other);
 }

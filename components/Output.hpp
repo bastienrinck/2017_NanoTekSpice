@@ -24,4 +24,5 @@ class Component_Output : public nts::IComponent {
 	protected:
 	private:
 		std::vector<nts::Tristate *> _inPins;
+		std::vector<nts::IComponent *> dependencies;
 };
