@@ -31,7 +31,6 @@ void Component_Output::setLink(std::size_t pin, nts::IComponent &other,
 	if (pin != 1)
 		throw std::out_of_range("pin out of authorized range");
 	_inPins[pin - 1] = &(other.getPin(otherPin));
-	dependencies.push_back(&other);
 }
 
 void Component_Output::dump() const

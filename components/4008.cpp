@@ -30,14 +30,14 @@ Component_4008::Component_4008()
 {
 	for (auto &i : _outPins)
 		i = nts::UNDEFINED;
-	_inPins[9] = std::make_tuple(&(_outPins[0]), nullptr);
-	_inPins[10] = std::make_tuple(&(_outPins[1]), nullptr);
-	_inPins[11] = std::make_tuple(&(_outPins[2]), nullptr);
-	_inPins[12] = std::make_tuple(&(_outPins[3]), nullptr);
-	_inPins[13] = std::make_tuple(&(_outPins[4]), nullptr);
-	_inPins[16] = std::make_tuple(&(_outPins[5]), nullptr);
-	_inPins[17] = std::make_tuple(&(_outPins[6]), nullptr);
-	_inPins[18] = std::make_tuple(&(_outPins[7]), nullptr);
+	_inPins[9] = std::make_tuple(&(_outPins[0]), nullptr, -1);
+	_inPins[10] = std::make_tuple(&(_outPins[1]), nullptr, -1);
+	_inPins[11] = std::make_tuple(&(_outPins[2]), nullptr, -1);
+	_inPins[12] = std::make_tuple(&(_outPins[3]), nullptr, -1);
+	_inPins[13] = std::make_tuple(&(_outPins[4]), nullptr, -1);
+	_inPins[16] = std::make_tuple(&(_outPins[5]), nullptr, -1);
+	_inPins[17] = std::make_tuple(&(_outPins[6]), nullptr, -1);
+	_inPins[18] = std::make_tuple(&(_outPins[7]), nullptr, -1);
 	_prohibedPins = {8, 16};
 	_computablePins = {10, 11, 12, 13};
 	_pair[9] = {6, 7, 9};
@@ -54,6 +54,12 @@ nts::Tristate Component_4008::compute(std::size_t pin)
 	if (!&getPin(_pair[pin-1][0]) || !&getPin(_pair[pin-1][1]) ||
 		!&getPin(_pair[pin-1][2]))
 		return nts::UNDEFINED;
+	std::get<1>(_inPins[_pair[pin-1][0] - 1])
+		->compute(std::get<2>(_inPins[_pair[pin-1][0] - 1]));
+	std::get<1>(_inPins[_pair[pin-1][1] - 1])
+		->compute(std::get<2>(_inPins[_pair[pin-1][1] - 1]));
+	std::get<1>(_inPins[_pair[pin-1][2] - 1])
+		->compute(std::get<2>(_inPins[_pair[pin-1][2] - 1]));
 	auto res =  Logic::sum_(
 		getPin(_pair[pin-1][0]),
 		getPin(_pair[pin-1][1]),
@@ -83,6 +89,6 @@ void Component_4008::setLink(std::size_t pin, nts::IComponent &other,
 	else if (std::find(_prohibedPins.begin(), _prohibedPins.end(), pin) !=
 		_prohibedPins.end())
 		throw std::out_of_range("pin out of authorized range");
-	_inPins[pin - 1] = std::make_tuple(&(other.getPin(otherPin)), &other);
-	dependencies.push_back(&other);
+	_inPins[pin - 1] = std::make_tuple(&(other.getPin(otherPin)), &other,
+						otherPin);
 }

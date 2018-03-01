@@ -14,10 +14,10 @@ Component_4001::Component_4001()
 {
 	for (auto &i : _outPins)
 		i = nts::UNDEFINED;
-	_inPins[2] = std::make_tuple(&(_outPins[0]), nullptr);
-	_inPins[3] = std::make_tuple(&(_outPins[1]), nullptr);
-	_inPins[9] = std::make_tuple(&(_outPins[2]), nullptr);
-	_inPins[10] = std::make_tuple(&(_outPins[3]), nullptr);
+	_inPins[2] = std::make_tuple(&(_outPins[0]), nullptr, -1);
+	_inPins[3] = std::make_tuple(&(_outPins[1]), nullptr, -1);
+	_inPins[9] = std::make_tuple(&(_outPins[2]), nullptr, -1);
+	_inPins[10] = std::make_tuple(&(_outPins[3]), nullptr, -1);
 	_prohibedPins = {7, 14};
 	_computablePins = {3, 4, 10, 11};
 	_pair[2] = {1, 2};
@@ -33,6 +33,10 @@ nts::Tristate Component_4001::compute(std::size_t pin)
 		throw std::out_of_range("pin not computable");
 	if (!&getPin(_pair[pin-1][0]) || !&getPin(_pair[pin-1][1]))
 		return nts::UNDEFINED;
+	std::get<1>(_inPins[_pair[pin-1][0] - 1])
+		->compute(std::get<2>(_inPins[_pair[pin-1][0] - 1]));
+	std::get<1>(_inPins[_pair[pin-1][1] - 1])
+		->compute(std::get<2>(_inPins[_pair[pin-1][1] - 1]));
 	return Logic::nor_(
 		getPin(_pair[pin-1][0]),
 		getPin(_pair[pin-1][1]),
@@ -57,6 +61,6 @@ void Component_4001::setLink(std::size_t pin, nts::IComponent &other,
 	else if (std::find(_prohibedPins.begin(), _prohibedPins.end(), pin) !=
 		_prohibedPins.end())
 		throw std::out_of_range("pin out of authorized range");
-	_inPins[pin - 1] = std::make_tuple(&(other.getPin(otherPin)), &other);
-	dependencies.push_back(&other);
+	_inPins[pin - 1] = std::make_tuple(&(other.getPin(otherPin)), &other,
+						otherPin);
 }

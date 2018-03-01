@@ -25,5 +25,4 @@ class Component_Input : public nts::IComponent {
 	private:
 		std::vector<nts::Tristate *> _inPins;
 		std::vector<nts::Tristate> _outPins;
-		std::vector<nts::IComponent *> dependencies;
 };
