@@ -49,7 +49,7 @@ void Simulator::simulate()
 {
 
 	for(auto i : components)
-		if (i.second.getType() == nts::C_OUTPUT)
+		if (i.second->getType() == nts::C_OUTPUT)
 			i.second->compute();
 }
 
