@@ -6,10 +6,11 @@
 */
 #include <iostream>
 #include <vector>
-#include <signal.h>
+#include <csignal>
 #include <functional>
 #include "Simulator.hpp"
 #include "../parser/Parser.hpp"
+#include "../TekSpice.hpp"
 
 std::atomic_bool Simulator::simLoop(false);
 
@@ -46,7 +47,10 @@ void Simulator::inputValue()
 
 void Simulator::simulate()
 {
-	std::cout << "Simulating" << std::endl;
+
+	for(auto i : components)
+		if (i.second.getType() == TekSpice::C_OUTPUT)
+			i.second->compute();
 }
 
 void Simulator::my_handler(int s) {

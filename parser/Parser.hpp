@@ -1,6 +1,9 @@
-//
-// Created by rectoria on 26/02/18.
-//
+/*
+** EPITECH PROJECT, 2021
+** cpp_nanotekspice
+** File description:
+** Created by rectoria
+*/
 
 #ifndef PARSER_HPP
 #define PARSER_HPP

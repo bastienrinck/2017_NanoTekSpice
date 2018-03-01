@@ -8,6 +8,7 @@
 #pragma once
 
 #include <string>
+#include "TekSpice.hpp"
 
 namespace nts
 {
@@ -16,6 +17,8 @@ namespace nts
 		TRUE = true,
 		FALSE = false
 	};
+
+	enum C_TYPE;
 
 	class IComponent
 	{
@@ -27,5 +30,7 @@ namespace nts
 						std::size_t) = 0;
 			virtual Tristate &getPin(std::size_t) = 0;
 			virtual void dump() const = 0;
+
+			virtual C_TYPE getType() = 0;
 	};
 }

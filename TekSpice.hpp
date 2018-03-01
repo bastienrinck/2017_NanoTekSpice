@@ -28,6 +28,15 @@ class TekSpice {
 
 		TekSpice();
 		~TekSpice();
+
+		enum C_TYPE {
+			C_INPUT,
+			C_OUTPUT,
+			C_4001,
+			C_4008,
+			C_4081,
+			C_4011
+		};
 	protected:
 	private:
 		std::map<std::string, std::shared_ptr<nts::IComponent>(*)(const std::string &)> _fcts = {
