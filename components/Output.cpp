@@ -8,21 +8,21 @@
 #include "Output.hpp"
 
 Component_Output::Component_Output()
-	: _inPins(1)
 {}
 
 nts::Tristate Component_Output::compute(std::size_t pin)
 {
 	if (pin != 1)
 		throw std::out_of_range("pin out of authorized range");
-	return *_inPins[pin];
+	std::get<1>(_inPin)->compute(std::get<2>(_inPin));
+	return *(std::get<0>(_inPin));
 }
 
 nts::Tristate &Component_Output::getPin(std::size_t pin)
 {
 	if (pin != 1)
 		throw std::out_of_range("pin out of authorized range");
-	return *(_inPins[pin - 1]);
+	return *(std::get<0>(_inPin));
 }
 
 void Component_Output::setLink(std::size_t pin, nts::IComponent &other,
@@ -30,7 +30,7 @@ void Component_Output::setLink(std::size_t pin, nts::IComponent &other,
 {
 	if (pin != 1)
 		throw std::out_of_range("pin out of authorized range");
-	_inPins[pin - 1] = &(other.getPin(otherPin));
+	_inPin = std::make_tuple(&(other.getPin(otherPin)), &other, otherPin);
 }
 
 void Component_Output::dump() const

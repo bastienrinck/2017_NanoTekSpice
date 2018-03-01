@@ -24,5 +24,5 @@ class Component_Output : public nts::IComponent {
 		nts::C_TYPE getType() { return nts::C_OUTPUT; }
 	protected:
 	private:
-		std::vector<nts::Tristate *> _inPins;
+		std::tuple<nts::Tristate *, IComponent *, size_t> _inPin;
 };

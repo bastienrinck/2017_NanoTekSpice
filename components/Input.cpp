@@ -18,7 +18,6 @@ Component_Input::Component_Input()
 
 nts::Tristate Component_Input::compute(std::size_t pin)
 {
-	printf("Compute component %p\n", this);
 	if (pin != 1)
 		throw std::out_of_range("pin out of authorized range");
 	return *(_inPins[pin - 1]);
