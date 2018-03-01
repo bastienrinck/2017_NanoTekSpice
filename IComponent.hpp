@@ -22,8 +22,11 @@ namespace nts
 		C_OUTPUT,
 		C_4001,
 		C_4008,
+		C_4011,
+		C_4030,
+		C_4069,
+		C_4071,
 		C_4081,
-		C_4011
 	};
 
 	class IComponent
