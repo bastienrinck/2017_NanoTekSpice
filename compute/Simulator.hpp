@@ -20,6 +20,7 @@ class Simulator {
 
 	public:
 		void parseFile(std::string &);
+		bool parseArgs(int, char **);
 		void getCommand();
 	private:
 		void exit();

@@ -8,6 +8,7 @@
 #include <vector>
 #include <csignal>
 #include <functional>
+#include <regex>
 #include "Simulator.hpp"
 #include "../parser/Parser.hpp"
 #include "../TekSpice.hpp"
@@ -27,6 +28,27 @@ void Simulator::parseFile(std::string &filename)
 	Parser p;
 
 	components = p.parse_file(filename);
+}
+
+bool Simulator::parseArgs(int ac, char **av)
+{
+	std::vector<std::string> args(ac);
+
+	for (int i = 0 ; i < ac ; ++i) {
+		args[i] = std::string(av[i]);
+	}
+	if (ac < 2)
+		return false;
+	parseFile(args[1]);
+	if (ac > 2) {
+		std::regex re("[a-zA-Z0-9]+=([01]|-1)");
+		std::smatch m;
+		for (int j = 2 ; j < ac ; ++j) {
+			if (!std::regex_match(args[j], m, re))
+				return false;
+		}
+	}
+	return true;
 }
 
 void Simulator::exit()
