@@ -12,17 +12,17 @@
 #include "../IComponent.hpp"
 #include "../Logic.hpp"
 
-class Component_Output : public nts::IComponent {
+class Component_True : public nts::IComponent {
 	public:
-		Component_Output();
-		~Component_Output() = default;
+		Component_True();
+		~Component_True() = default;
 
 		nts::Tristate compute(std::size_t = 1) final;
 		void setLink(std::size_t, nts::IComponent &, std::size_t) final;
 		nts::Tristate &getPin(std::size_t) final;
 		void dump() const final;
-		nts::C_TYPE getType() { return nts::C_CLOCK; }
+		nts::C_TYPE getType() { return nts::C_TRUE; }
 	protected:
 	private:
-		std::tuple<nts::Tristate *, IComponent *, size_t> _inPin;
+		nts::Tristate _outPin;
 };

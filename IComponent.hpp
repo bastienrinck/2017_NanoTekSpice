@@ -21,6 +21,9 @@ namespace nts
 	enum C_TYPE {
 		C_INPUT,
 		C_OUTPUT,
+		C_CLOCK,
+		C_TRUE,
+		C_FALSE,
 		C_4001,
 		C_4008,
 		C_4011,

@@ -33,6 +33,9 @@ class TekSpice {
 		std::map<std::string, std::shared_ptr<nts::IComponent>(*)(const std::string &)> _fcts = {
 			{"input", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_Input);}},
 			{"output", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_Output);}},
+			{"clock", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_Clock);}},
+			{"true", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_True);}},
+			{"false", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_False);}},
 			{"4001", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4001);}},
 			{"4008", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4008);}},
 			{"4011", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4011);}},
