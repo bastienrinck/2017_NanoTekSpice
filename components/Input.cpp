@@ -35,3 +35,11 @@ void Component_Input::setLink(std::size_t, nts::IComponent &,
 {
 	throw std::out_of_range("pin out of authorized range");
 }
+
+void Component_Input::dump() const
+{
+	std::cout 
+		<< "=== Input ===" << std::endl
+		<< "Pin 1: " << *(_inPins[0]) << std::endl
+		<< "=============" << std::endl;
+}
