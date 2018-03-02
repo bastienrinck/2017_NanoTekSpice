@@ -63,7 +63,7 @@ void Component_4081::dump() const
 {
 	std::cout << std::endl << "=== 4081 ===" << std::endl;
 	
-	for (int i = 0 ; i < _inPins.size() ; ++i) {
+	for (size_t i = 0 ; i < _inPins.size() ; ++i) {
 		nts::Tristate *t = std::get<0>(_inPins[i]);
 		std::cout << "Pin "
 			<< i + 1

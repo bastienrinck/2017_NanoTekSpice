@@ -58,3 +58,19 @@ void Component_4071::setLink(std::size_t pin, nts::IComponent &other,
 	_inPins[pin - 1] = std::make_tuple(&(other.getPin(otherPin)), &other,
 						otherPin);
 }
+
+void Component_4071::dump() const
+{
+	std::cout << std::endl << "=== 4071 ===" << std::endl;
+	
+	for (size_t i = 0 ; i < _inPins.size() ; ++i) {
+		nts::Tristate *t = std::get<0>(_inPins[i]);
+		std::cout << "Pin "
+			<< i + 1
+			<< ": "
+			<< (t ? *t : -1)
+			<< std::endl;
+	}
+	std::cout << "============" << std::endl;
+}
+
