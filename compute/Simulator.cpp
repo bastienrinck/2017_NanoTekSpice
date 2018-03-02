@@ -34,7 +34,7 @@ bool Simulator::parseArgs(int ac, char **av)
 {
 	std::vector<std::string> args(ac);
 
-	for (int i = 0 ; i < ac ; ++i) {
+	for (int i = 0; i < ac; ++i) {
 		args[i] = std::string(av[i]);
 	}
 	if (ac < 2)
@@ -43,9 +43,18 @@ bool Simulator::parseArgs(int ac, char **av)
 	if (ac > 2) {
 		std::regex re("[a-zA-Z0-9]+=([01]|-1)");
 		std::smatch m;
-		for (int j = 2 ; j < ac ; ++j) {
-			if (!std::regex_match(args[j], m, re))
+		for (int j = 2; j < ac; ++j) {
+			if (!std::regex_match(args[j].c_str(), m, re))
 				return false;
+			std::regex reg("[a-zA-Z0-9]+");
+			std::regex_search(args[j], m, reg);
+
+			std::cout << m[0] << " " << m[1] << std::endl;
+
+			if (components[m[0]]->getType() == nts::C_INPUT ||
+				components[m[0]]->getType() == nts::C_CLOCK)
+				components[m[0]]->getPin(1) = nts::Tristate(
+					std::stoi(m[1]));
 		}
 	}
 	return true;
@@ -58,9 +67,20 @@ void Simulator::exit()
 
 void Simulator::display()
 {
+	typedef std::pair<std::string, std::shared_ptr<nts::IComponent>> CustomPair;
+	std::vector<CustomPair> arr;
+
 	for (auto i : components)
 		if (i.second->getType() == nts::C_OUTPUT)
-			std::cout << i.first + "=" <<i.second->getPin(1) << std::endl;
+			arr.emplace_back(i.first, i.second);
+	std::sort(arr.begin(), arr.end(),
+		[](CustomPair first, CustomPair second) {
+			return strcmp(std::get<0>(first).c_str(),
+				std::get<0>(second).c_str()) < 0;
+		});
+	for (auto &i : arr)
+		std::cout << std::get<0>(i) + "=" << std::get<1>(i)->getPin(1)
+			<< std::endl;
 }
 
 void Simulator::inputValue()
@@ -70,12 +90,13 @@ void Simulator::inputValue()
 void Simulator::simulate()
 {
 
-	for(auto i : components)
+	for (auto i : components)
 		if (i.second->getType() == nts::C_OUTPUT)
 			i.second->compute();
 }
 
-void Simulator::my_handler(int s) {
+void Simulator::my_handler(int s)
+{
 	(void)s;
 	simLoop = false;
 }

@@ -25,7 +25,7 @@ SRCS	= ./TekSpice.cpp \
 OBJS	= $(SRCS:.cpp=.o)
 
 CPPFLAGS = -I./pp
-CPPFLAGS += -W -Wall -Wextra -g
+CPPFLAGS += -W -Wall -Wextra -g -std=c++11
 
 all: $(NAME)
 
