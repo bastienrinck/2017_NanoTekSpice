@@ -47,14 +47,13 @@ bool Simulator::parseArgs(int ac, char **av)
 			if (!std::regex_match(args[j], m, re))
 				return false;
 			std::regex reg("[a-zA-Z0-9]+");
-			std::regex_search(args[j], m, reg);
-
-			std::cout << m[0] << " " << m[1] << std::endl;
-
-			if (components[m[0]]->getType() == nts::C_INPUT ||
-				components[m[0]]->getType() == nts::C_CLOCK)
-				components[m[0]]->getPin(1) = nts::Tristate(
-					std::stoi(m[1]));
+			auto first = std::sregex_iterator(args[j].begin(), args[j].end(), reg);
+			std::string name = first->str();
+			int val = std::stoi((++first)->str());
+			
+			if (components[name]->getType() == nts::C_INPUT ||
+				components[name]->getType() == nts::C_CLOCK)
+				components[name]->getPin(1) = nts::Tristate(val);
 		}
 	}
 	return true;
