@@ -44,7 +44,7 @@ bool Simulator::parseArgs(int ac, char **av)
 		std::regex re("[a-zA-Z0-9]+=([01]|-1)");
 		std::smatch m;
 		for (int j = 2; j < ac; ++j) {
-			if (!std::regex_match(args[j].c_str(), m, re))
+			if (!std::regex_match(args[j], m, re))
 				return false;
 			std::regex reg("[a-zA-Z0-9]+");
 			std::regex_search(args[j], m, reg);
