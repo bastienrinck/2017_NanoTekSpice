@@ -61,13 +61,15 @@ void Component_4081::setLink(std::size_t pin, nts::IComponent &other,
 
 void Component_4081::dump() const
 {
-	std::cout 
-		<< "=== 4081 ===" << std::endl
-		<< "Pin 1: " << *(std::get<0>(_inPins[0])) << std::endl
-		<< "Pin 2: " << *(std::get<0>(_inPins[1])) << std::endl
-		<< "Pin 3: " << *(std::get<0>(_inPins[2])) << std::endl
-		<< "Pin 4: " << *(std::get<0>(_inPins[3])) << std::endl
-		<< "Pin 5: " << *(std::get<0>(_inPins[4])) << std::endl
-		<< "Pin 6: " << *(std::get<0>(_inPins[5])) << std::endl
-		<< "============" << std::endl;
+	std::cout << std::endl << "=== 4081 ===" << std::endl;
+	
+	for (int i = 0 ; i < _inPins.size() ; ++i) {
+		nts::Tristate *t = std::get<0>(_inPins[i]);
+		std::cout << "Pin "
+			<< i + 1
+			<< ": "
+			<< (t ? *t : -1)
+			<< std::endl;
+	}
+	std::cout << "============" << std::endl;
 }

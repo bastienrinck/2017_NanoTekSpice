@@ -36,7 +36,7 @@ void Component_Clock::setLink(std::size_t, nts::IComponent &,
 void Component_Clock::dump() const
 {
 	std::cout 
-		<< "=== Clock ===" << std::endl
+		<< std::endl << "=== Clock ===" << std::endl
 		<< "Pin 1: " << _outPin << std::endl
 		<< "=============" << std::endl;
 }

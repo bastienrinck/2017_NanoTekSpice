@@ -35,7 +35,7 @@ void Component_True::setLink(std::size_t, nts::IComponent &,
 void Component_True::dump() const
 {
 	std::cout 
-		<< "=== True ===" << std::endl
+		<< std::endl << "=== True ===" << std::endl
 		<< "Pin 1: " << _outPin << std::endl
 		<< "============" << std::endl;
 }

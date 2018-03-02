@@ -34,4 +34,10 @@ void Component_Output::setLink(std::size_t pin, nts::IComponent &other,
 }
 
 void Component_Output::dump() const
-{}
+{
+	nts::Tristate *t = std::get<0>(_inPin);
+	std::cout
+		<< "=== Output ===" << std::endl
+		<< "Pin 1: " << (t ? *t : -1) << std::endl
+		<< "==============" << std::endl;
+}

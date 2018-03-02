@@ -21,6 +21,9 @@
 #include "components/4081.hpp"
 #include "components/Input.hpp"
 #include "components/Output.hpp"
+#include "components/Clock.hpp"
+#include "components/True.hpp"
+#include "components/False.hpp"
 
 class TekSpice {
 	public:

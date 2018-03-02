@@ -39,7 +39,7 @@ void Component_Input::setLink(std::size_t, nts::IComponent &,
 void Component_Input::dump() const
 {
 	std::cout 
-		<< "=== Input ===" << std::endl
+		<< std::endl << "=== Input ===" << std::endl
 		<< "Pin 1: " << *(_inPins[0]) << std::endl
 		<< "=============" << std::endl;
 }

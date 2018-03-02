@@ -15,6 +15,9 @@ SRCS	= ./TekSpice.cpp \
 		./components/4081.cpp \
 		./components/Input.cpp \
 		./components/Output.cpp \
+		./components/Clock.cpp \
+		./components/True.cpp \
+		./components/False.cpp \
 		./parser/Parser.cpp \
 		./compute/Simulator.cpp \
 		./main.cpp 
