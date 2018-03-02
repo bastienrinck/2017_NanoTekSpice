@@ -41,7 +41,7 @@ bool Simulator::parseArgs(int ac, char **av)
 		return false;
 	parseFile(args[1]);
 	if (ac > 2) {
-		std::regex re("[a-zA-Z0-9]+=([01]|-1)");
+		std::regex re("[a-zA-Z0-9]+=[01]");
 		std::smatch m;
 		for (int j = 2; j < ac; ++j) {
 			if (!std::regex_match(args[j], m, re))
