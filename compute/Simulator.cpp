@@ -82,8 +82,11 @@ void Simulator::display()
 				std::get<0>(second).c_str()) < 0;
 		});
 	for (auto &i : arr)
-		std::cout << std::get<0>(i) + "=" << std::get<1>(i)->getPin(1)
-			<< std::endl;
+		if (std::get<1>(i)->getPin(1) != -1)
+			std::cout << std::get<0>(i) + "="
+				<< std::get<1>(i)->getPin(1) << std::endl;
+		else
+			std::cout << std::get<0>(i) + "=U" << std::endl;
 }
 
 void Simulator::inputValue(std::string line)
@@ -98,7 +101,6 @@ void Simulator::inputValue(std::string line)
 
 	if (components.count(str))
 		components[str]->getPin(1) = nts::Tristate(pin);
-
 }
 
 void Simulator::simulate()
@@ -132,10 +134,11 @@ void Simulator::dump()
 
 void Simulator::getCommand()
 {
-	static const std::vector<std::string> cmd = {"exit", "display", "simulate", "loop", "dump"};
+	static const std::vector<std::string> cmd = {"exit", "display",
+		"simulate", "loop", "dump"};
 	static void (Simulator::*fptr[])() = {&Simulator::exit,
-		&Simulator::display,
-		&Simulator::simulate, &Simulator::loop, &Simulator::dump};
+		&Simulator::display, &Simulator::simulate, &Simulator::loop,
+		&Simulator::dump};
 	std::string line;
 	std::smatch m;
 
