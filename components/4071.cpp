@@ -31,8 +31,8 @@ nts::Tristate Component_4071::compute(std::size_t pin)
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) ==
 		_computablePins.end())
 		throw std::out_of_range("pin not computable");
-	if (!&getPin(_pair[pin-1][0]) || !&getPin(_pair[pin-1][1]))
-		return nts::UNDEFINED;
+	getPin(_pair[pin-1][0]);
+	getPin(_pair[pin-1][1]);
 	std::get<1>(_inPins[_pair[pin-1][0] - 1])
 		->compute(std::get<2>(_inPins[_pair[pin-1][0] - 1]));
 	std::get<1>(_inPins[_pair[pin-1][1] - 1])
@@ -46,6 +46,8 @@ nts::Tristate Component_4071::compute(std::size_t pin)
 
 nts::Tristate &Component_4071::getPin(std::size_t pin)
 {
+	if (std::get<0>(_inPins[pin - 1]) == nullptr)
+		throw std::runtime_error("pin not linked");
 	return *(std::get<0>(_inPins[pin - 1]));
 }
 

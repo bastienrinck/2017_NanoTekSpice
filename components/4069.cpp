@@ -35,8 +35,7 @@ nts::Tristate Component_4069::compute(std::size_t pin)
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) ==
 		_computablePins.end())
 		throw std::out_of_range("pin not computable");
-	if (!&getPin(_pair[pin-1][0]) || !&getPin(_pair[pin-1][1]))
-		return nts::UNDEFINED;
+	getPin(_pair[pin-1][0]);
 	std::get<1>(_inPins[_pair[pin-1][0] - 1])
 		->compute(std::get<2>(_inPins[_pair[pin-1][0] - 1]));
 	return Logic::not_(
@@ -50,6 +49,8 @@ nts::Tristate &Component_4069::getPin(std::size_t pin)
 	if (std::find(_prohibedPins.begin(), _prohibedPins.end(), pin) !=
 		_prohibedPins.end())
 		throw std::out_of_range("pin out of authorized range");
+	else if (std::get<0>(_inPins[pin - 1]) == nullptr)
+		throw std::runtime_error("pin not linked");
 	return *(std::get<0>(_inPins[pin - 1]));
 }
 

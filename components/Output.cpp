@@ -14,6 +14,8 @@ nts::Tristate Component_Output::compute(std::size_t pin)
 {
 	if (pin != 1)
 		throw std::out_of_range("pin out of authorized range");
+	if (std::get<0>(_inPin) == nullptr)
+		throw std::runtime_error("pin not linked");
 	std::get<1>(_inPin)->compute(std::get<2>(_inPin));
 	return *(std::get<0>(_inPin));
 }
@@ -22,6 +24,8 @@ nts::Tristate &Component_Output::getPin(std::size_t pin)
 {
 	if (pin != 1)
 		throw std::out_of_range("pin out of authorized range");
+	if (std::get<0>(_inPin) == nullptr)
+		throw std::runtime_error("pin not linked");
 	return *(std::get<0>(_inPin));
 }
 
