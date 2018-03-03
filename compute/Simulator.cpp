@@ -51,11 +51,12 @@ bool Simulator::parseArgs(int ac, char **av)
 				args[j].end(), reg);
 			std::string name = first->str();
 			int val = std::stoi((++first)->str());
-
-			if (components[name]->getType() == nts::C_INPUT)
+			if (components.count(name) &&
+				components[name]->getType() == nts::C_INPUT)
 				components[name]->getPin(1) = nts::Tristate(
 					val);
-			else if (components[name]->getType() == nts::C_CLOCK)
+			else if (components.count(name) &&
+				components[name]->getType() == nts::C_CLOCK)
 				components[name]->getPin(1) = nts::Tristate(
 					val ? val - 1 : val + 1);
 		}
@@ -147,12 +148,12 @@ void Simulator::getCommand()
 		std::cin >> line;
 		if (std::regex_match(line, m, std::regex("[a-zA-Z0-9]+=[01]")))
 			inputValue(line);
-		else
+		else if (!std::cin.eof())
 			for (unsigned i = 0; i < cmd.size(); i++) {
 				if (line == cmd[i]) {
 					(this->*fptr[i])();
 					break;
 				}
 			}
-	} while (!stop);
+	} while (!stop && !std::cin.eof());
 }
