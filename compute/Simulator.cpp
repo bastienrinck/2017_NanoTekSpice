@@ -86,8 +86,19 @@ void Simulator::display()
 			<< std::endl;
 }
 
-void Simulator::inputValue()
+void Simulator::inputValue(std::string line)
 {
+	std::string str;
+	int pin;
+	unsigned long i = 0;
+
+	for (unsigned long iter = line.find('=', i); iter > i; i++)
+		str += line[i];
+	pin = std::stoi(line.substr(i + 1, i + 2));
+
+	if (components.count(str))
+		components[str]->getPin(1) = nts::Tristate(pin);
+
 }
 
 void Simulator::simulate()
@@ -121,21 +132,24 @@ void Simulator::dump()
 
 void Simulator::getCommand()
 {
-	static const std::vector<std::string> cmd = {"exit", "display",
-		"input=value", "simulate", "loop", "dump"};
+	static const std::vector<std::string> cmd = {"exit", "display", "simulate", "loop", "dump"};
 	static void (Simulator::*fptr[])() = {&Simulator::exit,
-		&Simulator::display, &Simulator::inputValue,
+		&Simulator::display,
 		&Simulator::simulate, &Simulator::loop, &Simulator::dump};
 	std::string line;
+	std::smatch m;
 
 	do {
 		std::cout << ">";
 		std::cin >> line;
-		for (unsigned i = 0; i < cmd.size(); i++) {
-			if (line == cmd[i]) {
-				(this->*fptr[i])();
-				break;
+		if (std::regex_match(line, m, std::regex("[a-zA-Z0-9]+=[01]")))
+			inputValue(line);
+		else
+			for (unsigned i = 0; i < cmd.size(); i++) {
+				if (line == cmd[i]) {
+					(this->*fptr[i])();
+					break;
+				}
 			}
-		}
 	} while (!stop);
 }

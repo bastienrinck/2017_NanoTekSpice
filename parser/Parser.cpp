@@ -28,9 +28,10 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_l
 
 	getline(file, line);
 
-	if (line[0] == '#' || line.empty())
+	if ((line.empty() && !file.eof()) || line[0] == '#')
 		return get_links(components, file);
-
+	else if (line.empty() && file.eof())
+		return components;
 	i = (unsigned)line.find_first_not_of(" \t", i);
 	for (unsigned long iter = line.find(':', i); iter > i; i++)
 		component1 += line[i];

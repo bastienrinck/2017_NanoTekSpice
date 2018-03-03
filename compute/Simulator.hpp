@@ -25,10 +25,10 @@ class Simulator {
 	private:
 		void exit();
 		void display();
-		void inputValue();
 		void simulate();
 		void loop();
 		void dump();
+		void inputValue(std::string);
 		static void my_handler(int);
 		std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> components;
 		static std::atomic_bool simLoop;

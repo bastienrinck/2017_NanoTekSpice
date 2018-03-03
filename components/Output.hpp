@@ -21,7 +21,7 @@ class Component_Output : public nts::IComponent {
 		void setLink(std::size_t, nts::IComponent &, std::size_t) final;
 		nts::Tristate &getPin(std::size_t) final;
 		void dump() const final;
-		nts::C_TYPE getType() { return nts::C_CLOCK; }
+		nts::C_TYPE getType() { return nts::C_OUTPUT; }
 	protected:
 	private:
 		std::tuple<nts::Tristate *, IComponent *, size_t> _inPin;
