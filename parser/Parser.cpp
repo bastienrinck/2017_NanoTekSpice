@@ -16,7 +16,8 @@ Parser::Parser() = default;
 Parser::~Parser() = default;
 
 void Parser::get_links2(std::string &line,
-	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components
+	std::unordered_map<std::string,
+	std::unique_ptr<nts::IComponent>> &components
 )
 {
 	std::string component1;
@@ -48,7 +49,8 @@ void Parser::get_links2(std::string &line,
 }
 
 void Parser::get_links(
-	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components,
+	std::unordered_map<std::string,
+	std::unique_ptr<nts::IComponent>> &components,
 	std::ifstream &file
 )
 {
@@ -67,7 +69,8 @@ void Parser::get_links(
 }
 
 void Parser::get_chipset(
-	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components,
+	std::unordered_map<std::string,
+	std::unique_ptr<nts::IComponent>> &components,
 	std::ifstream &file
 )
 {
@@ -97,11 +100,13 @@ void Parser::get_chipset(
 	get_chipset(components, file);
 }
 
-std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> Parser::parse_file(
+std::unordered_map<std::string,
+std::unique_ptr<nts::IComponent>> Parser::parse_file(
 	std::string const &filename
 )
 {
-	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> components;
+	std::unordered_map<std::string,
+	std::unique_ptr<nts::IComponent>> components;
 	std::ifstream file(filename);
 	std::smatch m;
 	std::string line;
