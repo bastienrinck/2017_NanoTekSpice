@@ -61,11 +61,8 @@ nts::Tristate Component_4008::compute(std::size_t pin)
 	std::get<1>(_inPins[_pair[pin-1][2] - 1])
 		->compute(std::get<2>(_inPins[_pair[pin-1][2] - 1]));
 	auto res =  Logic::sum_(
-		getPin(_pair[pin-1][0]),
-		getPin(_pair[pin-1][1]),
-		getPin(_pair[pin-1][2]),
-		getPin(pin),
-		getPin(14)
+		getPin(_pair[pin-1][0]), getPin(_pair[pin-1][1]),
+		getPin(_pair[pin-1][2]), getPin(pin), getPin(14)
 	);
 	if (pin != 13)
 		*std::get<0>(_inPins[pin + 6]) = getPin(14);
