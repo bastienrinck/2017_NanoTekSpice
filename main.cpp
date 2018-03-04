@@ -12,7 +12,7 @@
 
 void sig_handler(int sig)
 {
-	std::cerr << "Fatal error E0" << sig+128 << std::endl;
+	std::cerr << "Fatal error E00" << sig << std::endl;
 	kill(0, SIGINT);
 }
 
