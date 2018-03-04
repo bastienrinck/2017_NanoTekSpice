@@ -99,7 +99,7 @@ std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> Parser::parse_
 	std::string line;
 
 	if (!file.is_open())
-		throw std::runtime_error("Can't open '" + filename + "'\n");
+		throw std::runtime_error("Can't open '" + filename + "'");
 	std::string s((std::istreambuf_iterator<char>(file)),
 		std::istreambuf_iterator<char>());
 	file.seekg(0, std::ios::beg);

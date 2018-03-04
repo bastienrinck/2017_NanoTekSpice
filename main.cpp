@@ -6,14 +6,27 @@
 */
 
 #include <iostream>
+#include <signal.h>
 #include "compute/Simulator.hpp"
 #include "TekSpice.hpp"
+
+void sig_handler(int sig)
+{
+	std::cerr << "Fatal error E0" << sig+128 << std::endl;
+	kill(0, SIGINT);
+}
 
 int main(int ac, char **av)
 {
 	Simulator s;
 
-	if (s.start(ac, av))
-		return 0;
+	signal(SIGSEGV, sig_handler);
+	signal(SIGABRT, sig_handler);
+	try {
+		if (s.start(ac, av))
+			return 0;
+	} catch (std::exception &e) {
+		std::cerr << "Fatal error: " << e.what() << std::endl;
+	}
 	return 84;
 }
