@@ -13,10 +13,9 @@ int main(int ac, char **av)
 {
 	Simulator s;
 
-	if (s.parseArgs(ac, av))
-		s.getCommand();
-	else
-		std::cout << "Bad args" << std::endl;
+	if (s.start(ac, av))
+		return 0;
+	return 84;
 	/*TekSpice t;
 	std::shared_ptr<nts::IComponent> i1 = t.createComponent("input", "");
 	std::shared_ptr<nts::IComponent> i2 = t.createComponent("input", "");

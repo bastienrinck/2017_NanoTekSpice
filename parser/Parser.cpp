@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <regex>
 #include "../TekSpice.hpp"
 #include "Parser.hpp"
 
@@ -46,7 +47,8 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_l
 	pin2 = static_cast<size_t>(std::stoi(
 		line.substr(i, line.find_first_of(" \t\n", i) - i)));
 	if (components.count(component1) && components.count(component2))
-		components[component2]->setLink(pin2, *components[component1], pin1);
+		components[component2]->setLink(pin2, *components[component1],
+			pin1);
 	if (file.eof())
 		return components;
 	return get_links(components, file);
@@ -62,13 +64,16 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_c
 	std::string type;
 	TekSpice t;
 	unsigned i = 0;
+	std::smatch m;
 
 	getline(file, line);
 
-	if (line == ".links:")
-		return get_links(components, file);
-	else if (line[0] == '#' || line.empty())
+	if (file.eof())
+		throw std::runtime_error("Invalid nts file");
+	if (line.empty() || line[0] == '#')
 		return get_chipset(components, file);
+	else if (line == ".links:")
+		return get_links(components, file);
 	i = (unsigned)line.find_first_not_of(" \t", i);
 	for (unsigned j = i; j < line.length() && line[j] != ' ' &&
 		line[j] != '\t'; j++, i++)
@@ -86,11 +91,18 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> Parser::parse_
 {
 	std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> components;
 	std::ifstream file(filename);
+	std::smatch m;
 	std::string line;
 
 	if (!file.is_open())
 		throw std::runtime_error("Can't open '" + filename + "'\n");
-	for (; getline(file, line) && line != ".chipsets:";);
+	std::string s((std::istreambuf_iterator<char>(file)),
+		std::istreambuf_iterator<char>());
+	file.seekg(0, std::ios::beg);
+	if (!std::regex_search(s, m, std::regex("(.chipsets:\\n)")) ||
+		!std::regex_search(s, m, std::regex("(.links:\\n)")))
+		throw std::runtime_error("Invalid nts file");
+	for (; getline(file, line) && !file.eof() && line != ".chipsets:";);
 	components = get_chipset(components, file);
 	return components;
 }
