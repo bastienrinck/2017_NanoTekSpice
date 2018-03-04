@@ -20,14 +20,16 @@ class Simulator {
 
 	public:
 		void parseFile(std::string &);
+		bool start(int, char **);
+	private:
 		bool parseArgs(int, char **);
 		void getCommand();
-	private:
 		void exit();
 		void display();
 		void simulate();
 		void loop();
 		void dump();
+		bool chipsetsAreSet();
 		void inputValue(std::string);
 		static void my_handler(int);
 		std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> components;

@@ -133,6 +133,33 @@ void Simulator::dump()
 		i.second->dump();
 }
 
+bool Simulator::chipsetsAreSet()
+{
+	for (auto &c : components) {
+		if ((c.second->getType() == nts::C_INPUT ||
+			c.second->getType() == nts::C_CLOCK) &&
+			c.second->getPin(1) == nts::UNDEFINED)
+			return false;
+	}
+	return true;
+}
+
+bool Simulator::start(int ac, char **av)
+{
+	if (!parseArgs(ac, av)) {
+		std::cout << "Bad arguments" << std::endl;
+		return (EXIT_FAILURE);
+	}
+	if (!chipsetsAreSet()) {
+		std::cout << "Inputs undefined" << std::endl;
+		return (EXIT_FAILURE);
+	}
+	simulate();
+	display();
+	getCommand();
+	return (EXIT_SUCCESS);
+}
+
 void Simulator::getCommand()
 {
 	static const std::vector<std::string> cmd = {"exit", "display",
@@ -144,7 +171,7 @@ void Simulator::getCommand()
 	std::smatch m;
 
 	do {
-		std::cout << ">";
+		std::cout << "> ";
 		std::cin >> line;
 		if (std::regex_match(line, m, std::regex("[a-zA-Z0-9]+=[01]")))
 			inputValue(line);
