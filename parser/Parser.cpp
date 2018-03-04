@@ -28,13 +28,10 @@ void Parser::get_links(
 
 	getline(file, line);
 
-	if ((line.empty() && !file.eof()) || line[0] == '#') {
-		get_links(components, file);
+	if ((line.empty() && !file.eof()) || line[0] == '#')
+		return get_links(components, file);
+	else if (line.empty() && file.eof())
 		return ;
-	}
-	else if (line.empty() && file.eof()) {
-		return ;
-	}
 	i = (unsigned)line.find_first_not_of(" \t", i);
 	for (unsigned long iter = line.find(':', i); iter > i; i++)
 		component1 += line[i];
@@ -49,8 +46,13 @@ void Parser::get_links(
 	pin2 = static_cast<size_t>(std::stoi(
 		line.substr(i, line.find_first_of(" \t\n", i) - i)));
 	if (components.count(component1) && components.count(component2))
-		components[component2]->setLink(pin2, *components[component1],
-			pin1);
+		try {
+			components[component2]->setLink(pin2, *components[component1],
+				pin1);
+		} catch (std::out_of_range) {
+			components[component1]->setLink(pin1, *components[component2],
+				pin2);
+		}
 	if (file.eof())
 		return ;
 	get_links(components, file);
