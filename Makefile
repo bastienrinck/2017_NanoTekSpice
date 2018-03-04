@@ -1,4 +1,4 @@
-NAME	= program
+NAME	= nanotekspice
 
 CC	= g++
 
