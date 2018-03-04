@@ -71,12 +71,12 @@ void Simulator::exit()
 
 void Simulator::display()
 {
-	typedef std::pair<std::string, std::shared_ptr<nts::IComponent>> CustomPair;
+	typedef std::pair<std::string, nts::IComponent *> CustomPair;
 	std::vector<CustomPair> arr;
 
-	for (auto i : components)
+	for (auto &i : components)
 		if (i.second->getType() == nts::C_OUTPUT)
-			arr.emplace_back(i.first, i.second);
+			arr.emplace_back(i.first, i.second.get());
 	std::sort(arr.begin(), arr.end(),
 		[](CustomPair first, CustomPair second) {
 			return strcmp(std::get<0>(first).c_str(),
@@ -107,7 +107,7 @@ void Simulator::inputValue(std::string line)
 void Simulator::simulate()
 {
 
-	for (auto i : components)
+	for (auto &i : components)
 		if (i.second->getType() == nts::C_OUTPUT)
 			i.second->compute();
 }
@@ -129,7 +129,7 @@ void Simulator::loop()
 
 void Simulator::dump()
 {
-	for (auto i : components)
+	for (auto &i : components)
 		i.second->dump();
 }
 

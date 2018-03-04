@@ -15,10 +15,9 @@ Parser::Parser() = default;
 
 Parser::~Parser() = default;
 
-std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_links(
-	std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &components,
-	std::ifstream &file
-)
+void Parser::get_links(
+	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components,
+	std::ifstream &file)
 {
 	std::string line;
 	std::string component1;
@@ -29,10 +28,13 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_l
 
 	getline(file, line);
 
-	if ((line.empty() && !file.eof()) || line[0] == '#')
-		return get_links(components, file);
-	else if (line.empty() && file.eof())
-		return components;
+	if ((line.empty() && !file.eof()) || line[0] == '#') {
+		get_links(components, file);
+		return ;
+	}
+	else if (line.empty() && file.eof()) {
+		return ;
+	}
 	i = (unsigned)line.find_first_not_of(" \t", i);
 	for (unsigned long iter = line.find(':', i); iter > i; i++)
 		component1 += line[i];
@@ -50,12 +52,12 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_l
 		components[component2]->setLink(pin2, *components[component1],
 			pin1);
 	if (file.eof())
-		return components;
-	return get_links(components, file);
+		return ;
+	get_links(components, file);
 }
 
-std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_chipset(
-	std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &components,
+void Parser::get_chipset(
+	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components,
 	std::ifstream &file
 )
 {
@@ -82,14 +84,14 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &Parser::get_c
 	for (; i < line.length() && line[i] != ' ' && line[i] != '\t'; i++)
 		name += line[i];
 	components[name] = t.createComponent(type, name);
-	return (get_chipset(components, file));
+	get_chipset(components, file);
 }
 
-std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> Parser::parse_file(
+std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> Parser::parse_file(
 	std::string const &filename
 )
 {
-	std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> components;
+	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> components;
 	std::ifstream file(filename);
 	std::smatch m;
 	std::string line;
@@ -103,6 +105,6 @@ std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> Parser::parse_
 		!std::regex_search(s, m, std::regex("(.links:\\n)")))
 		throw std::runtime_error("Invalid nts file");
 	for (; getline(file, line) && !file.eof() && line != ".chipsets:";);
-	components = get_chipset(components, file);
+	get_chipset(components, file);
 	return components;
 }

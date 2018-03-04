@@ -19,19 +19,19 @@ public:
 	~Parser();
 
 public:
-	std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> parse_file(
+	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> parse_file(
 		std::string const &
 	);
 
 private:
-	std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &get_chipset(
-		std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &,
+	void get_chipset(
+		std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &,
 		std::ifstream &
 	);
 
-	std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &get_links(
-		std::unordered_map<std::string, std::shared_ptr<nts::IComponent>> &components,
-		std::ifstream &file
+	void get_links(
+		std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &,
+		std::ifstream &
 	);
 };
 

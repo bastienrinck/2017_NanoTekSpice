@@ -27,25 +27,25 @@
 
 class TekSpice {
 	public:
-		std::shared_ptr <nts::IComponent> createComponent(const std::string &, const std::string &);
+		std::unique_ptr <nts::IComponent> createComponent(const std::string &, const std::string &);
 
 		TekSpice();
 		~TekSpice();
 	protected:
 	private:
-		std::map<std::string, std::shared_ptr<nts::IComponent>(*)(const std::string &)> _fcts = {
-			{"input", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_Input);}},
-			{"output", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_Output);}},
-			{"clock", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_Clock);}},
-			{"true", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_True);}},
-			{"false", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_False);}},
-			{"4001", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4001);}},
-			{"4008", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4008);}},
-			{"4011", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4011);}},
-			{"4030", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4030);}},
-			{"4069", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4069);}},
-			{"4071", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4071);}},
-			{"4081", [](const std::string &){return std::shared_ptr<nts::IComponent>(new Component_4081);}}
+		std::map<std::string, std::unique_ptr<nts::IComponent>(*)(const std::string &)> _fcts = {
+			{"input", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_Input);}},
+			{"output", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_Output);}},
+			{"clock", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_Clock);}},
+			{"true", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_True);}},
+			{"false", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_False);}},
+			{"4001", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4001);}},
+			{"4008", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4008);}},
+			{"4011", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4011);}},
+			{"4030", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4030);}},
+			{"4069", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4069);}},
+			{"4071", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4071);}},
+			{"4081", [](const std::string &){return std::unique_ptr<nts::IComponent>(new Component_4081);}}
 	};
 };
 
