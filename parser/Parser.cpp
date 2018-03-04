@@ -15,24 +15,16 @@ Parser::Parser() = default;
 
 Parser::~Parser() = default;
 
-void Parser::get_links(
-	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components,
-	std::ifstream &file)
+void Parser::get_links2(std::string &line,
+	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components
+)
 {
-	std::string line;
 	std::string component1;
 	std::string component2;
 	size_t pin1;
 	size_t pin2;
-	unsigned i = 0;
+	auto i = (unsigned)line.find_first_not_of(" \t", 0);
 
-	getline(file, line);
-
-	if ((line.empty() && !file.eof()) || line[0] == '#')
-		return get_links(components, file);
-	else if (line.empty() && file.eof())
-		return ;
-	i = (unsigned)line.find_first_not_of(" \t", i);
 	for (unsigned long iter = line.find(':', i); iter > i; i++)
 		component1 += line[i];
 	i += 1;
@@ -47,14 +39,30 @@ void Parser::get_links(
 		line.substr(i, line.find_first_of(" \t\n", i) - i)));
 	if (components.count(component1) && components.count(component2))
 		try {
-			components[component2]->setLink(pin2, *components[component1],
-				pin1);
-		} catch (std::out_of_range) {
-			components[component1]->setLink(pin1, *components[component2],
-				pin2);
+			components[component2]->setLink(pin2,
+				*components[component1], pin1);
+		} catch (std::out_of_range &) {
+			components[component1]->setLink(pin1,
+				*components[component2], pin2);
 		}
+}
+
+void Parser::get_links(
+	std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components,
+	std::ifstream &file
+)
+{
+	std::string line;
+
+	getline(file, line);
+
+	if ((line.empty() && !file.eof()) || line[0] == '#')
+		return get_links(components, file);
+	else if (line.empty() && file.eof())
+		return;
+	get_links2(line, components);
 	if (file.eof())
-		return ;
+		return;
 	get_links(components, file);
 }
 

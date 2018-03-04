@@ -35,32 +35,28 @@ bool Simulator::parseArgs(int ac, char **av)
 {
 	std::vector<std::string> args(ac);
 
-	for (int i = 0; i < ac; ++i) {
+	for (int i = 0; i < ac; ++i)
 		args[i] = std::string(av[i]);
-	}
 	if (ac < 2)
 		return false;
 	parseFile(args[1]);
-	if (ac > 2) {
-		std::regex re("[a-zA-Z0-9]+=[01]");
-		std::smatch m;
-		for (int j = 2; j < ac; ++j) {
-			if (!std::regex_match(args[j], m, re))
-				return false;
-			std::regex reg("[a-zA-Z0-9]+");
-			auto first = std::sregex_iterator(args[j].begin(),
-				args[j].end(), reg);
-			std::string name = first->str();
-			int val = std::stoi((++first)->str());
-			if (components.count(name) &&
-				components[name]->getType() == nts::C_INPUT)
-				components[name]->getPin(1) = nts::Tristate(
-					val);
-			else if (components.count(name) &&
-				components[name]->getType() == nts::C_CLOCK)
-				components[name]->getPin(1) = nts::Tristate(
-					val ? val - 1 : val + 1);
-		}
+	std::regex re("[a-zA-Z0-9]+=[01]");
+	std::smatch m;
+	for (int j = 2; j < ac; ++j) {
+		if (!std::regex_match(args[j], m, re))
+			return false;
+		std::regex reg("[a-zA-Z0-9]+");
+		auto first = std::sregex_iterator(args[j].begin(),
+			args[j].end(), reg);
+		std::string name = first->str();
+		int val = std::stoi((++first)->str());
+		if (components.count(name) &&
+			components[name]->getType() == nts::C_INPUT)
+			components[name]->getPin(1) = nts::Tristate(val);
+		else if (components.count(name) &&
+			components[name]->getType() == nts::C_CLOCK)
+			components[name]->getPin(1) = nts::Tristate(
+				val ? val - 1 : val + 1);
 	}
 	return true;
 }

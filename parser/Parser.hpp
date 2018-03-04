@@ -33,6 +33,10 @@ private:
 		std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &,
 		std::ifstream &
 	);
+
+	void get_links2(std::string &line,
+		std::unordered_map<std::string, std::unique_ptr<nts::IComponent>> &components
+	);
 };
 
 #endif
