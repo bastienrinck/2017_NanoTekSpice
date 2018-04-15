@@ -27,6 +27,7 @@ protected:
 private:
 	std::vector<std::tuple<nts::Tristate *, IComponent *, size_t>> _inPins;
 	std::vector<nts::Tristate> _outPins;
+	std::vector<int> _tempOutPins;
 	std::vector<int> _prohibedPins;
 	std::vector<int> _computablePins;
 	std::map<int, std::vector<int>> _pair;

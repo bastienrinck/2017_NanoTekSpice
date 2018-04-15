@@ -8,7 +8,7 @@
 #include <algorithm>
 #include "4040.hpp"
 
-Component_4040::Component_4040() : _inPins(16), _outPins(12)
+Component_4040::Component_4040() : _inPins(16), _outPins(12), _tempOutPins(12)
 {
 	for (auto &i : _outPins)
 		i = nts::Tristate::UNDEFINED;
@@ -39,20 +39,24 @@ nts::Tristate Component_4040::compute(std::size_t pin)
 		std::get<1>(_inPins[i-1])->compute(std::get<2>(_inPins[i-1]));
 	}
 	if (!getPin(10) && _prev_clock == nts::Tristate::TRUE) {
-		size_t ret = (_outPins[11] == nts::TRUE) ? 1 : 0;
-		_outPins[11] =
-			(_outPins[11] == nts::TRUE) ? nts::FALSE : nts::TRUE;
+		size_t ret = 0;
+		_tempOutPins[11] += 1;
 		for (int i = 11; i >= 0; --i) {
-			if (ret)
-				_outPins[i] = (_outPins[i] == nts::TRUE) ?
-					nts::UNDEFINED : nts::TRUE;
-			ret = (_outPins[i] == nts::UNDEFINED) ? 1 : 0;
-			if (_outPins[i] == nts::UNDEFINED)
-				_outPins[i] = nts::FALSE;
+			if (ret) {
+				_tempOutPins[i] += ret;
+				ret = 0;
+			}
+			if (_tempOutPins[i] >= 2) {
+				_tempOutPins[i] = 0;
+				ret = 1;
+			}
 		}
 	}
-	for (int i = 0; getPin(11) && i < 12; ++i)
-		_outPins[i] = nts::Tristate::FALSE;
+	for (int i = 0; i < 12; ++i) {
+		_outPins[i] = (getPin(11) == nts::Tristate::TRUE) ?
+			nts::Tristate::FALSE :
+			static_cast<nts::Tristate>(_tempOutPins[i]);
+	}
 	_prev_clock = getPin(10) == nts::Tristate::TRUE ? nts::Tristate::TRUE :
 		nts::Tristate::FALSE;
 	return *std::get<0>(_inPins[pin - 1]);
