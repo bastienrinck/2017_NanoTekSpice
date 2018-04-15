@@ -16,6 +16,7 @@
 #include "components/4008.hpp"
 #include "components/4011.hpp"
 #include "components/4030.hpp"
+#include "components/4040.hpp"
 #include "components/4069.hpp"
 #include "components/4071.hpp"
 #include "components/4081.hpp"
@@ -58,6 +59,8 @@ private:
 		return std::unique_ptr<nts::IComponent>(new Component_4011);
 	}}, {"4030", [](const std::string &) {
 		return std::unique_ptr<nts::IComponent>(new Component_4030);
+	}}, {"4040", [](const std::string &) {
+		return std::unique_ptr<nts::IComponent>(new Component_4040);
 	}}, {"4069", [](const std::string &) {
 		return std::unique_ptr<nts::IComponent>(new Component_4069);
 	}}, {"4071", [](const std::string &) {
