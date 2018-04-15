@@ -25,6 +25,8 @@ public:
 	nts::C_TYPE getType() {return nts ::C_4040;}
 protected:
 private:
+	void proceed_4040();
+
 	std::vector<std::tuple<nts::Tristate *, IComponent *, size_t>> _inPins;
 	std::vector<nts::Tristate> _outPins;
 	std::vector<int> _tempOutPins;

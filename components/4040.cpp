@@ -28,6 +28,22 @@ Component_4040::Component_4040() : _inPins(16), _outPins(12), _tempOutPins(12)
 	_computablePins = {1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14, 15};
 }
 
+void Component_4040::proceed_4040()
+{
+	size_t ret = 0;
+	_tempOutPins[11] += 1;
+	for (int i = 11; i >= 0; --i) {
+		if (ret) {
+			_tempOutPins[i] += ret;
+			ret = 0;
+		}
+		if (_tempOutPins[i] >= 2) {
+			_tempOutPins[i] = 0;
+			ret = 1;
+		}
+	}
+}
+
 nts::Tristate Component_4040::compute(std::size_t pin)
 {
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) ==
@@ -36,22 +52,11 @@ nts::Tristate Component_4040::compute(std::size_t pin)
 	}
 	for (auto i : {10, 11}) {
 		getPin(i);
-		std::get<1>(_inPins[i-1])->compute(std::get<2>(_inPins[i-1]));
+		std::get<1>(_inPins[i - 1])->compute(
+			std::get<2>(_inPins[i - 1]));
 	}
-	if (!getPin(10) && _prev_clock == nts::Tristate::TRUE) {
-		size_t ret = 0;
-		_tempOutPins[11] += 1;
-		for (int i = 11; i >= 0; --i) {
-			if (ret) {
-				_tempOutPins[i] += ret;
-				ret = 0;
-			}
-			if (_tempOutPins[i] >= 2) {
-				_tempOutPins[i] = 0;
-				ret = 1;
-			}
-		}
-	}
+	if (!getPin(10) && _prev_clock == nts::Tristate::TRUE)
+		proceed_4040();
 	for (int i = 0; i < 12; ++i) {
 		_outPins[i] = (getPin(11) == nts::Tristate::TRUE) ?
 			nts::Tristate::FALSE :
