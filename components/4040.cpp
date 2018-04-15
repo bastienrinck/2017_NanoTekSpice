@@ -11,7 +11,7 @@
 Component_4040::Component_4040() : _inPins(16), _outPins(12)
 {
 	for (auto &i : _outPins)
-		i = nts::UNDEFINED;
+		i = nts::FALSE;
 	_inPins[0] = std::make_tuple(&(_outPins[11]), nullptr, -1);
 	_inPins[1] = std::make_tuple(&(_outPins[5]), nullptr, -1);
 	_inPins[2] = std::make_tuple(&(_outPins[4]), nullptr, -1);
