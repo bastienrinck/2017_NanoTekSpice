@@ -39,7 +39,7 @@ Component_4008::Component_4008()
 	_inPins[17] = std::make_tuple(&(_outPins[6]), nullptr, -1);
 	_inPins[18] = std::make_tuple(&(_outPins[7]), nullptr, -1);
 	_prohibedPins = {8, 16};
-	_computablePins = {10, 11, 12, 13};
+	_computablePins = {10, 11, 12, 13, 14};
 	_pair[9] = {6, 7, 9};
 	_pair[10] = {4, 5, 17};
 	_pair[11] = {2, 3, 18};
@@ -51,6 +51,8 @@ nts::Tristate Component_4008::compute(std::size_t pin)
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) ==
 		_computablePins.end())
 		throw std::out_of_range("pin not computable");
+	if (pin == 14)
+		return nts::Tristate::UNDEFINED;
 	getPin(_pair[pin-1][0]);
 	getPin(_pair[pin-1][1]);
 	getPin(_pair[pin-1][2]);
