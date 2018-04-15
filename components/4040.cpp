@@ -33,8 +33,7 @@ nts::Tristate Component_4040::compute(std::size_t pin)
 	bool clock = getPin(10);
 	bool reset = getPin(11);
 	size_t ret;
-
-	std::cout << "Clock : " << _prev_clock << ", " << clock << std::endl;
+	
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) ==
 		_computablePins.end())
 		throw std::out_of_range("pin not computable");
