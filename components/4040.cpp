@@ -12,18 +12,18 @@ Component_4040::Component_4040() : _inPins(16), _outPins(12)
 {
 	for (auto &i : _outPins)
 		i = nts::UNDEFINED;
-	_inPins[1] = std::make_tuple(&(_outPins[12]), nullptr, -1);
-	_inPins[2] = std::make_tuple(&(_outPins[6]), nullptr, -1);
-	_inPins[3] = std::make_tuple(&(_outPins[5]), nullptr, -1);
-	_inPins[4] = std::make_tuple(&(_outPins[7]), nullptr, -1);
-	_inPins[5] = std::make_tuple(&(_outPins[4]), nullptr, -1);
-	_inPins[6] = std::make_tuple(&(_outPins[3]), nullptr, -1);
-	_inPins[7] = std::make_tuple(&(_outPins[2]), nullptr, -1);
-	_inPins[9] = std::make_tuple(&(_outPins[1]), nullptr, -1);
-	_inPins[12] = std::make_tuple(&(_outPins[9]), nullptr, -1);
-	_inPins[13] = std::make_tuple(&(_outPins[8]), nullptr, -1);
+	_inPins[0] = std::make_tuple(&(_outPins[11]), nullptr, -1);
+	_inPins[1] = std::make_tuple(&(_outPins[5]), nullptr, -1);
+	_inPins[2] = std::make_tuple(&(_outPins[4]), nullptr, -1);
+	_inPins[3] = std::make_tuple(&(_outPins[6]), nullptr, -1);
+	_inPins[4] = std::make_tuple(&(_outPins[3]), nullptr, -1);
+	_inPins[5] = std::make_tuple(&(_outPins[2]), nullptr, -1);
+	_inPins[6] = std::make_tuple(&(_outPins[1]), nullptr, -1);
+	_inPins[8] = std::make_tuple(&(_outPins[0]), nullptr, -1);
+	_inPins[11] = std::make_tuple(&(_outPins[8]), nullptr, -1);
+	_inPins[12] = std::make_tuple(&(_outPins[7]), nullptr, -1);
+	_inPins[13] = std::make_tuple(&(_outPins[9]), nullptr, -1);
 	_inPins[14] = std::make_tuple(&(_outPins[10]), nullptr, -1);
-	_inPins[15] = std::make_tuple(&(_outPins[11]), nullptr, -1);
 	_prohibedPins = {8, 16};
 	_computablePins = {1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 14, 15};
 }
