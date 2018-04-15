@@ -16,8 +16,12 @@ nts::Tristate Component_Clock::compute(std::size_t pin)
 {
 	if (pin != 1)
 		throw std::out_of_range("pin out of authorized range");
-	_outPin = (_outPin == nts::TRUE) ? nts::FALSE : nts::TRUE;
 	return _outPin;
+}
+
+void Component_Clock::clock()
+{
+	_outPin = (_outPin == nts::TRUE) ? nts::FALSE : nts::TRUE;
 }
 
 nts::Tristate &Component_Clock::getPin(std::size_t pin)

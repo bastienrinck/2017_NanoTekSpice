@@ -11,7 +11,7 @@
 Component_4040::Component_4040() : _inPins(16), _outPins(12)
 {
 	for (auto &i : _outPins)
-		i = nts::FALSE;
+		i = nts::Tristate::UNDEFINED;
 	_inPins[0] = std::make_tuple(&(_outPins[11]), nullptr, -1);
 	_inPins[1] = std::make_tuple(&(_outPins[5]), nullptr, -1);
 	_inPins[2] = std::make_tuple(&(_outPins[4]), nullptr, -1);
@@ -30,23 +30,16 @@ Component_4040::Component_4040() : _inPins(16), _outPins(12)
 
 nts::Tristate Component_4040::compute(std::size_t pin)
 {
-	bool clock;
-	bool reset;
-	size_t ret;
-
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) ==
 		_computablePins.end()) {
 		throw std::out_of_range("pin not computable");
 	}
 	for (auto i : {10, 11}) {
 		getPin(i);
-		std::get<1>(_inPins[i - 1])->compute(
-			std::get<2>(_inPins[i - 1]));
+		std::get<1>(_inPins[i-1])->compute(std::get<2>(_inPins[i-1]));
 	}
-	clock = getPin(10);
-	reset = getPin(11);
-	if (!clock && _prev_clock != nts::Tristate::UNDEFINED) {
-		ret = (_outPins[11] == nts::TRUE) ? 1 : 0;
+	if (!getPin(10) && _prev_clock == nts::Tristate::TRUE) {
+		size_t ret = (_outPins[11] == nts::TRUE) ? 1 : 0;
 		_outPins[11] =
 			(_outPins[11] == nts::TRUE) ? nts::FALSE : nts::TRUE;
 		for (int i = 11; i >= 0; --i) {
@@ -58,9 +51,9 @@ nts::Tristate Component_4040::compute(std::size_t pin)
 				_outPins[i] = nts::FALSE;
 		}
 	}
-	for (int i = 0; reset && i < 12; ++i)
+	for (int i = 0; getPin(11) && i < 12; ++i)
 		_outPins[i] = nts::Tristate::FALSE;
-	_prev_clock = clock == nts::Tristate::TRUE ? nts::Tristate::TRUE :
+	_prev_clock = getPin(10) == nts::Tristate::TRUE ? nts::Tristate::TRUE :
 		nts::Tristate::FALSE;
 	return *std::get<0>(_inPins[pin - 1]);
 }

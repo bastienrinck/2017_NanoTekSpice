@@ -18,6 +18,7 @@ class Component_Clock : public nts::IComponent {
 		~Component_Clock() = default;
 
 		nts::Tristate compute(std::size_t = 1) final;
+		void clock();
 		void setLink(std::size_t, nts::IComponent &, std::size_t) final;
 		nts::Tristate &getPin(std::size_t) final;
 		void dump() const final;

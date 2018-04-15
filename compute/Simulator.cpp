@@ -103,7 +103,9 @@ void Simulator::inputValue(std::string line)
 
 void Simulator::simulate()
 {
-
+	for (auto &i : components)
+		if (i.second->getType() == nts::C_CLOCK)
+			static_cast<Component_Clock *>(&*i.second)->clock();
 	for (auto &i : components)
 		if (i.second->getType() == nts::C_OUTPUT)
 			i.second->compute();
