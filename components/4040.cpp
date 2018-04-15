@@ -33,7 +33,8 @@ nts::Tristate Component_4040::compute(std::size_t pin)
 	bool clock = getPin(10);
 	bool reset = getPin(11);
 	size_t ret;
-	
+
+	std::cout << "Clock : " << _prev_clock << ", " << clock << std::endl;
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) ==
 		_computablePins.end())
 		throw std::out_of_range("pin not computable");
@@ -52,14 +53,11 @@ nts::Tristate Component_4040::compute(std::size_t pin)
 		_outPins[i] = nts::Tristate::FALSE;
 	_prev_clock = clock == nts::Tristate::TRUE ? nts::Tristate::TRUE :
 		nts::Tristate::FALSE;
-	if (getPin(pin) == 1)
-		return nts::Tristate::TRUE;
-	return nts::Tristate::FALSE;
+	return *std::get<0>(_inPins[pin-1]);
 }
 
 void Component_4040::setLink(std::size_t pin, nts::IComponent &other,
-	std::size_t otherPin
-)
+	std::size_t otherPin)
 {
 	if (std::find(_computablePins.begin(), _computablePins.end(), pin) !=
 		_computablePins.end())
