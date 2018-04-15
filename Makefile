@@ -13,6 +13,7 @@ SRCS	= ./TekSpice.cpp \
 		./components/4069.cpp \
 		./components/4071.cpp \
 		./components/4081.cpp \
+		./components/4514.cpp \
 		./components/Input.cpp \
 		./components/Output.cpp \
 		./components/Clock.cpp \

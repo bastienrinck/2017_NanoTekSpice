@@ -19,6 +19,7 @@
 #include "components/4069.hpp"
 #include "components/4071.hpp"
 #include "components/4081.hpp"
+#include "components/4514.hpp"
 #include "components/Input.hpp"
 #include "components/Output.hpp"
 #include "components/Clock.hpp"
@@ -63,6 +64,8 @@ private:
 		return std::unique_ptr<nts::IComponent>(new Component_4071);
 	}}, {"4081", [](const std::string &) {
 		return std::unique_ptr<nts::IComponent>(new Component_4081);
+	}}, {"4514", [](const std::string &) {
+		return std::unique_ptr<nts::IComponent>(new Component_4514);
 	}}};
 };
 

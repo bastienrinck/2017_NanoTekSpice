@@ -31,6 +31,7 @@ namespace nts
 		C_4069,
 		C_4071,
 		C_4081,
+		C_4514,
 	};
 
 	class IComponent
