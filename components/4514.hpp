@@ -24,6 +24,9 @@ class Component_4514 : public nts::IComponent {
 		nts::C_TYPE getType() {return nts ::C_4514;}
 	protected:
 	private:
+		void _init_pair();
+		void _init_inPins();
+
 		std::vector<std::tuple<nts::Tristate *, IComponent *, size_t>> _inPins;
 		std::vector<nts::Tristate> _outPins;
 		std::vector<int> _prohibedPins;

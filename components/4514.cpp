@@ -6,7 +6,6 @@
 */
 
 #include <algorithm>
-
 #include "4514.hpp"
 
 Component_4514::Component_4514()
@@ -15,6 +14,15 @@ Component_4514::Component_4514()
 {
 	for (auto &i : _outPins)
 		i = nts::UNDEFINED;
+	_init_inPins();
+	_prohibedPins = {12, 24};
+	_computablePins = {4, 5, 6, 7, 8, 9, 10, 11,
+		13, 14, 15, 16, 17, 18, 19, 20};
+	_init_pair();
+}
+
+void Component_4514::_init_inPins()
+{
 	_inPins[3] = std::make_tuple(&(_outPins[0]), nullptr, -1);
 	_inPins[4] = std::make_tuple(&(_outPins[1]), nullptr, -1);
 	_inPins[5] = std::make_tuple(&(_outPins[2]), nullptr, -1);
@@ -31,9 +39,10 @@ Component_4514::Component_4514()
 	_inPins[17] = std::make_tuple(&(_outPins[13]), nullptr, -1);
 	_inPins[18] = std::make_tuple(&(_outPins[14]), nullptr, -1);
 	_inPins[19] = std::make_tuple(&(_outPins[15]), nullptr, -1);
-	_prohibedPins = {12, 24};
-	_computablePins = {4, 5, 6, 7, 8, 9, 10, 11,
-		13, 14, 15, 16, 17, 18, 19, 20};
+}
+
+void Component_4514::_init_pair()
+{
 	_pair[3] = {1, 1, 1, 0};
 	_pair[4] = {0, 1, 1, 0};
 	_pair[5] = {1, 0, 1, 0};
